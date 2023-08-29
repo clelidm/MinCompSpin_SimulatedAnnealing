@@ -38,6 +38,29 @@ struct Partition {
 	vector<double> partition_evidence = vector<double>(n); // log-evidence for each community 
 };
 
+struct Partition_vect {
+
+	Partition_vect(const unsigned int &n_) : n(n_) {}
+
+	unsigned int n; // number of variables
+	__uint128_t unused_bits = NOT_ZERO - ((ONE << n) - 1); // ones in the unused bits - used for fast location of empty partitions
+
+	double T; // annealing temperature
+	double current_log_evidence = 0;
+	double best_log_evidence = 0;
+
+	unsigned int N = 0; // number of samples in dataset
+	unsigned int nc = 0; // current number of communities 
+
+	__uint128_t occupied_partitions = 0; // occupied communities (with at least one node)
+	__uint128_t occupied_partitions_gt2_nodes = 0; // communities with at least two nodes (for split and switch)
+	
+	vector<pair<__uint128_t, unsigned int>> data;
+	vector<__uint128_t> current_partition = vector<__uint128_t>(n);
+	vector<__uint128_t> best_partition = vector<__uint128_t>(n);
+	vector<double> partition_evidence = vector<double>(n); // log-evidence for each community 
+};
+
 // function declarations
 bool DoubleSame(double a, double b);
 
@@ -72,7 +95,14 @@ void greedy_merging(Partition &p_struct);
 
 
 
+////// ADDED:
 
+void get_data_vect(string fname, Partition_vect &p_struct);
+void independent_partition_vect(Partition_vect &p_struct);
+double icc_evidence_vect(__uint128_t community, Partition_vect &p_struct);
+
+
+void greedy_merging_vect(Partition_vect &p_struct);
 
 
 

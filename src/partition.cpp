@@ -93,3 +93,38 @@ void load_partition(Partition &p_struct, string pname) {
 	cout << "- initial log-evidence: " << p_struct.current_log_evidence << "\n" << endl;
 
 }
+
+
+/// *********************** ADDED ************************************** /
+
+void parse_community_vect(Partition_vect &p_struct, __uint128_t community, int i){
+
+	p_struct.current_partition[i] = community;
+	p_struct.partition_evidence[i] = icc_evidence_vect(community, p_struct);
+	p_struct.current_log_evidence += p_struct.partition_evidence[i];
+	p_struct.occupied_partitions += (ONE << i);
+	p_struct.nc++;
+	if (bit_count(community) >= 2){
+		p_struct.occupied_partitions_gt2_nodes += (ONE << i);
+	}
+
+}
+
+void independent_partition_vect(Partition_vect &p_struct) {
+
+	__uint128_t community;
+
+	for (unsigned int i = 0; i < p_struct.n; i++) {
+
+		community = (ONE << i);
+		parse_community_vect(p_struct, community, i);
+		// cout << "New community: " << int_to_bitstring(community, p_struct.n) << endl;
+	}
+
+	p_struct.best_log_evidence = p_struct.current_log_evidence;
+	p_struct.best_partition = p_struct.current_partition;
+
+	cout << "- starting from independent partition" << endl;
+	cout << "- initial log-evidence: " << p_struct.current_log_evidence << "\n" << endl;
+}
+
