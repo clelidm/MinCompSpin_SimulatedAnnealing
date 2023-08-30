@@ -47,7 +47,7 @@ void get_data_vect(string fname, Partition_vect &p_struct) {
 
 	cout << "- loaded: " << fpath;
 	cout << " (" << p_struct.N << " samples)\n" << endl;
-	cout << "test test N = " << data.size() << endl;
+	//cout << "test test N = " << data.size() << endl;
 
 	(p_struct.data).resize(data.size()); // reserve(n)
   	int i=0;
