@@ -1,3 +1,6 @@
+//g++ -std=c++11 -O3 -Wall ./src/*.cpp -o ./bin/saa.out
+// ./saa.out n -i DATAFILE_NAME -g -s  graph_samples_lfrc
+
 #include "header.h"
 
 
@@ -102,8 +105,8 @@ int main(int argc, char **argv) {
 
     Partition_vect p_struct_vect(n);
     get_data_vect(fname, p_struct_vect);
-    cout << "Number of datapoints: N = " << p_struct_vect.N << endl;
-    cout << "Nset.size = " << (p_struct_vect.data).size() << endl << endl;
+//    cout << "Number of datapoints: N = " << p_struct_vect.N << endl;
+//    cout << "Nset.size = " << (p_struct_vect.data).size() << endl << endl;
 
     if (pload) {
 //    	load_partition(p_struct, pname);
@@ -137,17 +140,15 @@ int main(int argc, char **argv) {
         cout << "- elapsed time      : " << elapsed.count() << "s" << endl;
 */
     }
-    cout << endl;
+    //cout << endl;
 
     // main algorithm 
     if (anneal) {
 /*        simulated_annealing(p_struct, max_iterations, max_no_improve);
 
-        cout << "- current log-evidence (after SAA): " << p_struct.current_log_evidence << endl;
-        cout << "- best log-evidence (after SAA):    " << p_struct.best_log_evidence << endl;
 */    }
-    
-
+    cout << "- current log-evidence (after SAA): " << p_struct_vect.current_log_evidence << endl;
+    cout << "- best log-evidence (after SAA):    " << p_struct_vect.best_log_evidence << endl;
 
 	// print and save best partition
 	string cpath = "../output/comms/" + fname + "_comms.dat";
